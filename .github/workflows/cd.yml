@@ -1,0 +1,92 @@
+name: CD - Build Push Deploy
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Lint with flake8
+        run: flake8 app/ --max-line-length=88
+
+      - name: Run tests
+        run: pytest app/tests/ -v
+
+  build-push:
+    runs-on: ubuntu-latest
+    needs: test
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: true
+          tags: |
+            ${{ secrets.DOCKER_USERNAME }}/2312241-devops-project:latest
+            ${{ secrets.DOCKER_USERNAME }}/2312241-devops-project:${{ github.sha }}
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build-push
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    steps:
+      - name: Deploy to EC2
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ubuntu
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            docker pull ${{ secrets.DOCKER_USERNAME }}/2312241-devops-project:latest
+
+            docker run -d \
+              --name devops-db \
+              --restart unless-stopped \
+              -e POSTGRES_DB=appdb \
+              -e POSTGRES_USER=devops \
+              -e POSTGRES_PASSWORD=secret123 \
+              -v postgres_data:/var/lib/postgresql/data \
+              postgres:15 || true
+
+            docker start devops-db || true
+
+            docker stop myapp || true
+            docker rm myapp || true
+
+            docker run -d \
+              --name myapp \
+              --restart unless-stopped \
+              -p 8000:8000 \
+              --link devops-db:db \
+              -e DB_HOST=db \
+              -e DB_NAME=appdb \
+              -e DB_USER=devops \
+              -e DB_PASSWORD=secret123 \
+              ${{ secrets.DOCKER_USERNAME }}/2312241-devops-project:latest
+
+            echo 'Deployment complete at' $(date)
