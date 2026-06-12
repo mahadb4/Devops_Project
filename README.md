@@ -5,7 +5,7 @@
 Name: Mahad Baloch  
 Registration Number: 2312241  
 GitHub Username: mahadb4  
-GitHub Account Email: mahadbaloch000@gmail.com  
+GitHub Account Email: 2312241.mahadbaloch@gmail.com  
 Git Author Email for this project: mahadbaloch000+2312241@gmail.com
 
 ## Project Title
@@ -66,7 +66,7 @@ Example JSON body:
 {
   "name": "Mahad Baloch",
   "reg_no": "2312241",
-  "email": "mahadbaloch000@gmail.com",
+  "email": "2312241.mahadbaloch@gmail.com",
   "course": "DevOps Fundamentals"
 }
 ```

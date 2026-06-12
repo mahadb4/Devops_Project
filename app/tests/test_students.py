@@ -2,7 +2,7 @@ def test_create_student(client):
     payload = {
         "name": "Mahad Baloch",
         "reg_no": "2312241",
-        "email": "mahadbaloch000@gmail.com",
+        "email": "2312241.mahadbaloch@gmail.com",
         "course": "DevOps Fundamentals",
     }
 
@@ -18,7 +18,7 @@ def test_get_students_returns_created_record(client):
     payload = {
         "name": "Mahad Baloch",
         "reg_no": "2312241",
-        "email": "mahadbaloch000@gmail.com",
+        "email": "2312241.mahadbaloch@gmail.com",
         "course": "DevOps Fundamentals",
     }
     client.post("/students", json=payload)
@@ -34,7 +34,7 @@ def test_get_single_student_by_reg_no(client):
     payload = {
         "name": "Mahad Baloch",
         "reg_no": "2312241",
-        "email": "mahadbaloch000@gmail.com",
+        "email": "2312241.mahadbaloch@gmail.com",
         "course": "DevOps Fundamentals",
     }
     client.post("/students", json=payload)
@@ -56,7 +56,7 @@ def test_duplicate_student_returns_400(client):
     payload = {
         "name": "Mahad Baloch",
         "reg_no": "2312241",
-        "email": "mahadbaloch000@gmail.com",
+        "email": "2312241.mahadbaloch@gmail.com",
         "course": "DevOps Fundamentals",
     }
 
