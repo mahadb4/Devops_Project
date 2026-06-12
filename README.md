@@ -6,7 +6,7 @@ Name: Mahad Baloch
 Registration Number: 2312241  
 GitHub Username: mahadb4  
 GitHub Account Email: 2312241.mahadbaloch@gmail.com  
-Git Author Email for this project: mahadbaloch000+2312241@gmail.com
+Git Author Email for this project: 2312241.mahadbaloch@gmail.com
 
 ## Project Title
 
@@ -90,7 +90,6 @@ Returns one student record or 404 if not found.
 ```text
 2312241-devops-project/
 ├── app/
-│   ├── __init__.py
 │   ├── main.py
 │   ├── database.py
 │   ├── models.py
@@ -193,7 +192,7 @@ Set your Git username and project author email:
 
 ```bash
 git config user.name "Mahad Baloch"
-git config user.email "mahadbaloch000+2312241@gmail.com"
+git config user.email "2312241.mahadbaloch@gmail.com"
 ```
 
 Start repository and push to GitHub:
@@ -256,7 +255,7 @@ The CI workflow is in:
 It runs on:
 
 - push to `main`
-- pull request to `main`
+- pull request to any branch
 
 It performs:
 
@@ -274,13 +273,12 @@ The CD workflow is in:
 .github/workflows/cd.yml
 ```
 
-It has three jobs:
+It has two jobs:
 
-1. `test`
-2. `build-push`
-3. `deploy`
+1. `build-push`
+2. `deploy`
 
-The deployment job runs only after tests pass and only on push to `main`.
+The deployment job runs only after the image is built and pushed, and only on push to `main`.
 
 ## EC2 Verification
 
