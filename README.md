@@ -5,8 +5,8 @@
 Name: Mahad Baloch  
 Registration Number: 2312241  
 GitHub Username: mahadb4  
-GitHub Account Email: 2312241.mahadbaloch@gmail.com  
-Git Author Email for this project: 2312241.mahadbaloch@gmail.com
+GitHub Account Email: mahadbaloch000@gmail.com  
+Git Author Email for this project: mahadbaloch000@gmail.com
 
 ## Project Title
 
@@ -66,7 +66,7 @@ Example JSON body:
 {
   "name": "Mahad Baloch",
   "reg_no": "2312241",
-  "email": "2312241.mahadbaloch@gmail.com",
+  "email": "mahadbaloch000@gmail.com",
   "course": "DevOps Fundamentals"
 }
 ```
@@ -192,7 +192,7 @@ Set your Git username and project author email:
 
 ```bash
 git config user.name "Mahad Baloch"
-git config user.email "2312241.mahadbaloch@gmail.com"
+git config user.email "mahadbaloch000@gmail.com"
 ```
 
 Start repository and push to GitHub:
